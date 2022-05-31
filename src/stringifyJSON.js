@@ -26,27 +26,48 @@
 // if obj is an object
   // iterate through the object
     // take current value and call stringifyJSON with value.
-    // take returned value and concat to stringifedObj.
+    // take returned value and concat to stringifiedObj.
 // take stringifiedObj and return the joined together array.
 
 
 var stringifyJSON = function(obj) {
-  return '' + obj;
-  // var stringifiedObj = [];
-  // if (typeof obj === 'number') {
-  //   stringifiedObj.push(obj);
-  // }
-  // if (obj === null) {
-  //   stringifiedObj.push('null');
-  // }
-  // if (obj === true) {
-  //   stringifiedObj.push('true');
-  // }
-  // if (obj === false) {
-  //   stringifiedObj.push('false');
-  // }
-  // console.log(stringifiedObj);
-  // return stringifiedObj.join('');
+  var stringifiedObj = [];
+  if (Array.isArray(obj)) {
+    obj.forEach( function(element) {
+      stringifiedObj.push(stringifyJSON(element));
+    });
+    return '[' + stringifiedObj.join(',') + ']';
+  }
+
+  if (typeof obj === 'object') {
+    if (obj === null) {
+      return 'null';
+    }
+    for (var key in obj) {
+      if (typeof obj[key] !== 'function' && typeof obj[key] !== 'undefined') {
+        stringifiedObj.push(stringifyJSON(key) + ':' + stringifyJSON(obj[key]));
+      }
+    }
+    return '{' + stringifiedObj.join(',') + '}';
+  }
+
+  if (typeof obj === 'number') {
+    stringifiedObj.push(obj);
+  }
+  if (obj === null) {
+    stringifiedObj.push('null');
+  }
+  if (obj === true) {
+    stringifiedObj.push('true');
+  }
+  if (obj === false) {
+    stringifiedObj.push('false');
+  }
+  if (typeof obj === 'string') {
+    stringifiedObj.push('"' + obj + '"');
+  }
+  console.log(stringifiedObj);
+  return stringifiedObj.join(',');
 
 
 
