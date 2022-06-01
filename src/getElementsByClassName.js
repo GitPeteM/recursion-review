@@ -10,7 +10,7 @@
 //C - none
 //E - none
 
-//Strategy
+//pseudodoce
   //result variable starting as an empty array
 
   //inner function that searches elements with parameter nodes
@@ -19,11 +19,11 @@
     //checking if the desired class is within the element (using class list)
     // if so push into the results variable
     //recursion case
-    //
-          //create variable allChildren
-          // inner function(node)
+    // iterater over the childNodes list for current node(s).
+      //take current child and recursively call innerFunction with the child.
 
-          // var allChildren = node.childNodes
+  //call the innerFunction with the document.body
+  // return the result.
 
 
 
@@ -33,14 +33,22 @@ var getElementsByClassName = function(className) {
 
   var innerFunction = function (nodes) {
     var allChildren = nodes.childNodes;
+    // console.log('currentNode:' + nodes);
+    // console.log('className' + className);
 
     //base case
-    if (_.contains()) {
-
+    if (_.contains(nodes.classList, className)) {
+      result.push(nodes);
     }
-  }
-
-  var allChildren =
+    //recursive case
+    _.each(allChildren, function(child) {
+      // result = result.concat(innerFunction(child));
+      innerFunction(child);
+    });
+  };
+  innerFunction(document.body);
+  console.log(result);
+  return result;
 };
 
 
